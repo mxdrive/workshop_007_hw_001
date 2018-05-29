@@ -107,6 +107,7 @@ class ManageWorkshop {
             if (aWorkshopList.getWorkshopAttendersQuantity() >= quantity) {
                 mostVisited.add(aWorkshopList);
                 quantity = aWorkshopList.getWorkshopAttendersQuantity();
+                //TODO change to foreach
                 for (int j = 0; j < mostVisited.size(); j++) {
                     if (mostVisited.get(j).getWorkshopAttendersQuantity() < aWorkshopList.getWorkshopAttendersQuantity()) {
                         mostVisited.remove(j);
