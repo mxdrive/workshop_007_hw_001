@@ -46,11 +46,14 @@ class ManageWorkshop {
     private void add() {
 
         Date workshopDate = null;
-        System.out.println("Type workshop date in format dd/MM/yy");
-        try {
-            workshopDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.next());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        while (workshopDate == null) {
+            System.out.println("Type workshop date in format dd/MM/yy");
+            try {
+                workshopDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.next());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                System.out.println("Wrong input! Try again");
+            }
         }
 
         System.out.println("Type workshop topic");
@@ -69,7 +72,7 @@ class ManageWorkshop {
     private void viewAll() {
         for (int i = 0; i < workshopList.size(); i++) {
             System.out.print(i + "). ");
-            view(workshopList.get(i));
+            workshopList.get(i).view();
         }
     }
 
@@ -91,7 +94,7 @@ class ManageWorkshop {
         int quantity = 0;
         for (Workshop workshop : workshopList) {
             if (workshop.getWorkshopAuthor().equals(author)) {
-                view(workshop);
+                workshop.view();
                 quantity++;
             }
         }
@@ -101,30 +104,17 @@ class ManageWorkshop {
     }
 
     private void viewMostVisited() {
-        List<Workshop> mostVisited = new ArrayList<>();
         int quantity = 0;
-        for (Workshop aWorkshopList : workshopList) {
-            if (aWorkshopList.getWorkshopAttendersQuantity() >= quantity) {
-                mostVisited.add(aWorkshopList);
-                quantity = aWorkshopList.getWorkshopAttendersQuantity();
-                //TODO change to foreach
-                for (int j = 0; j < mostVisited.size(); j++) {
-                    if (mostVisited.get(j).getWorkshopAttendersQuantity() < aWorkshopList.getWorkshopAttendersQuantity()) {
-                        mostVisited.remove(j);
-                    }
-                }
+        for (Workshop workshop : workshopList) {
+            if (workshop.getWorkshopAttendersQuantity() >= quantity) {
+                quantity = workshop.getWorkshopAttendersQuantity();
             }
         }
         System.out.println("Most visited workshop(s):");
-        for (Workshop integer : mostVisited) {
-            view(integer);
+        for (Workshop workshop : workshopList) {
+            if (workshop.getWorkshopAttendersQuantity() == quantity) {
+                workshop.view();
+            }
         }
     }
-
-    private void view(Workshop workshop) {
-        System.out.println("Date: " + new SimpleDateFormat("dd/MM/yyyy").format(workshop.getWorkshopDate()) +
-                ", topic: " + workshop.getWorkshopTopic() + ", author: " + workshop.getWorkshopAuthor() +
-                ", attenders quantity: " + workshop.getWorkshopAttendersQuantity());
-    }
-
 }

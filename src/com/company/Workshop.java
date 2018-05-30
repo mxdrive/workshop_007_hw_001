@@ -1,5 +1,6 @@
 package com.company;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class Workshop {
@@ -15,15 +16,11 @@ class Workshop {
         this.workshopAttendersQuantity = workshopAttendersQuantity;
     }
 
-    Date getWorkshopDate() {
-        return workshopDate;
+    void view() {
+        System.out.println("Date: " + new SimpleDateFormat("dd/MM/yyyy").format(workshopDate) +
+                ", topic: " + workshopTopic + ", author: " + workshopAuthor +
+                ", attenders quantity: " + workshopAttendersQuantity);
     }
-
-
-    String getWorkshopTopic() {
-        return workshopTopic;
-    }
-
 
     String getWorkshopAuthor() {
         return workshopAuthor;
